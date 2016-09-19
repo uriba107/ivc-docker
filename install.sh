@@ -49,6 +49,7 @@ function install_systemd() {
 function service_start() {
   if [ -f "$APP_PATH/$APP_BIN" ]; then
     echo "Starting $APP_NAME Service"
+    echo "Note: this part may take a while as docker container is pulled on initial activation"
     service ivc-server start
   else {
     create_folder
