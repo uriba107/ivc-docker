@@ -9,8 +9,8 @@ Docker size when compiled is under 200MB and negates the need to install Wine ma
 [Project page on dockerhub](https://hub.docker.com/r/108vfs/ivc/)
 
 ## Build Docker
- ``` Note:
- This stage is not mandatory, you can just install with the script and pull image from dockerhub ```
+ ``` Note: This stage is not mandatory,
+ you can just install with the script and pull image from dockerhub ```
  1. cd into build folder
  2. Run 'build.sh' script as a docker enabled user (root should work)
 
@@ -22,4 +22,3 @@ install script and systemd are ubuntu compatible and tested on Ubuntu 14.04.
 
 #### Other Dists
 please adjust scripts to fit your OS.
-
