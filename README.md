@@ -15,7 +15,7 @@ Docker size when compiled is under 200MB and negates the need to install Wine ma
  2. Run 'build.sh' script as a docker enabled user (root should work)
 
 ## Install IVC Server
-install script and systemd are ubuntu compatible and tested on Ubuntu 14.04.
+install script and systemd are ubuntu compatible and tested on Ubuntu 16.04.
 #### Ubuntu
  1. Copy BMS' IVC folder to the folder containing the install script on the server.
  2. Run 'install.sh' script as root.
