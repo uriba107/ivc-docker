@@ -21,4 +21,18 @@ install script and systemd are ubuntu compatible and tested on Ubuntu 16.04.
  2. Run 'install.sh' script as root.
 
 #### Other Dists
-please adjust scripts to fit your OS.
+1. Please adjust scripts to fit your OS.
+
+## Running IVC server manually
+If from some reason you chose not to use the install script, or couldn't get the init script to work on your system, You can pretty much do it manually.
+
+1. Start by copying IVC files to their proper location. the Docker container does not include the IVC binary, among other reasons, to allow you as a user to use the proper IVC server for the BMS version you are using. you should place the binarys are "/opt/ivc"
+2. Initially you'll need to create the Docker container on you machine </br>
+``` docker create --name ivc-server -v /opt/ivc:/opt/ivc -p 9987-9989:9987-9989/udp 108vfs/ivc  ```
+This will create a container called "ivc-server" which already links up the binary folder from your hard drive to the container and sets up the port forwarding needed. 
+3. Once container is created all you need to do is start it:</br>
+``` docker start -a ivc-server ```</br>
+The container will persist a reboot, so you'll only need to start it (no need to re-create)
+4. To stop or restart just use ``` docker stop ivc-server ``` or ``` docker restart ivc-server ```
+
+``` Note: The install script does all of this of you if you are using it ```
