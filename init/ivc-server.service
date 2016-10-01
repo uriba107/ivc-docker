@@ -1,23 +1,22 @@
-
 [Unit]
-Description=IVC Server BMS 4.33.1 
+Description=BMS IVC Server
 Requires=docker.service
 
 [Service]
-Type=forking
+Type=notify
+RemainAfterExit=yes
 
-ExecStartPre=-/usr/bin/docker create --name ivc-server -v /opt/ivc:/opt/ivc -p 9987-9989:9987-9989/udp 108vfs/ivc 
-ExecStart=/usr/bin/docker start -a ivc-server
-ExecStartPost=/usr/bin/docker ps | grep "ivc-server$"
+ExecStartPre=-/usr/bin/docker create --name ivc-server --restart on-failure:5 -v /opt/ivc:/opt/ivc -p 9987-9989:9987-9989/udp 108vfs/ivc
+ExecStart=/usr/bin/docker start ivc-server
 
 ExecStop=/usr/bin/docker stop ivc-server
 ExecStopPost=/usr/bin/docker rm -f ivc-server
 
 ExecReload=/usr/bin/docker restart ivc-server
 
-Restart=on-failure
-RestartPreventExitStatus=255
+SuccessExitStatus=0 143
 
 [Install]
 WantedBy=multi-user.target
 Alias=ivc.service
+
