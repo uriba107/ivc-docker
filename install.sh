@@ -31,7 +31,11 @@ function create_folder() {
     done
   else
     echo "$APP_NAME binaries are already in place"
-  fi 
+  fi
+  
+  mkdir -p /etc/ivc
+  cp $SCRIPT_PATH/conf/ivc-server.conf /etc/ivc/
+
   if [ ! -f "$APP_PATH/$APP_BIN" ]; then
     read -n 1 -s -p "Please make sure $APP_NAME folder from BMS bin is copied to $APP_PATH.. press any key to continue."
     echo ""

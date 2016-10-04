@@ -4,7 +4,7 @@
 FROM multiarch/alpine:x86-edge
 MAINTAINER uri_ba <uri@uriba.org>
 
-LABEL Description="BMS 4.33U1 IVC server" Vendor="Benchmark Sims" Version="4.33.1"
+LABEL Description="BMS IVC server" Vendor="Benchmark Sims" Version="0.0.1"
 
 ENV APP_NAME ivc
 ENV APP_ROOT /opt
@@ -19,7 +19,7 @@ RUN apk add --no-cache -t build-deps gcc curl musl-dev \
 
 ## install wine
 RUN echo "http://dl-3.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
- && apk add --no-cache freetype libpng wine
+ && apk add --no-cache -t ivc-deps freetype libpng wine
 
 EXPOSE 9987 9988 9989
 
@@ -30,6 +30,6 @@ RUN /usr/bin/wineboot --init
 WORKDIR /opt
 ADD wrapper/launcher.sh /opt
 
-
-ENTRYPOINT ["/usr/sbin/dumb-init", "--"]
-CMD [ "/opt/launcher.sh" ]
+VOLUME ["/opt/ivc"]
+#ENTRYPOINT ["/usr/sbin/dumb-init", "--", "/opt/launcher.sh" ]
+ENTRYPOINT [ "/opt/launcher.sh" ]

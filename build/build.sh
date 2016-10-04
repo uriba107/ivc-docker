@@ -9,7 +9,7 @@ DOCKER=$(which docker)
 function check_permissions(){
   id | grep -q docker
   RETVAL=$?
-  if [ $RETVAL -ne 0 ]; then
+  if [ $RETVAL -ne 0 ] && [ $(id -u) -ne 0 ]; then
     echo "Please run as root (sudo is good enough)"
     exit 1
   fi

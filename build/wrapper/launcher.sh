@@ -1,4 +1,4 @@
-#!/usr/sbin/dumb-init /bin/sh
+#!/bin/sh
 
 
 function check_bin(){
@@ -16,25 +16,31 @@ function start_app(){
   local APP_NAME=$1
   local PATH=$2
   local BIN=$3
+  local IVC_PASSWD=$4
 
+  local ARGS=""
+  if [ ! -z $IVC_PASSWD ]; then
+    ARGS="$ARGS -w ${IVC_PASSWD}"
+  fi
   echo "Launching ${APP_NAME}.."
-  /usr/sbin/dumb-init -- /usr/bin/wine "${PATH}/${BIN}"
+  /usr/sbin/dumb-init -- /usr/bin/wine "${PATH}/${BIN}" $ARGS
 }
 
 function main(){
-  local APP_NAME=${1:-${APP_NAME}}
-  local PATH=${2:-$APP_PATH}
-  local BIN=${3:-"IVC Server.exe"}
+  local APP_NAME=$APP_NAME
+  local PATH=$APP_PATH
+  local BIN="IVC Server.exe"
+  local INPUT=$1
 
-  if [ $APP_NAME == "bash" ] || [ $APP_NAME == "sh" ]; then
+  if [ $INPUT == "bash" ] || [ $INPUT == "sh" ]; then
+    PATH=$PATH:/bin:/sbin:/usr/sbin:/usr/bin
     /bin/sh
   else {
     check_bin $APP_NAME $PATH "${BIN}"
-    start_app $APP_NAME $PATH "${BIN}"
+    start_app $APP_NAME $PATH "${BIN}" $INPUT
   }
   fi
 
 }
 
 main $@
-
