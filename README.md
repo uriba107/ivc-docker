@@ -21,9 +21,9 @@ install script and systemd are ubuntu compatible and tested on Ubuntu 16.04 and 
  2. Run 'install.sh' script as root.
 
 #### Other Dists
-1. Please adjust scripts to fit your OS.
+Please adjust scripts to fit your OS.
 
-## Running IVC server manually
+#### Running IVC server manually
 If from some reason you chose not to use the install script, or couldn't get the init script to work on your system, You can pretty much do it manually.
 
 1. Start by copying IVC files to their proper location. the Docker container does not include the IVC binary, among other reasons, to allow you as a user to use the proper IVC server for the BMS version you are using. you should place the binarys are "/opt/ivc"
@@ -36,3 +36,25 @@ The container will persist a reboot, so you'll only need to start it (no need to
 4. To stop or restart just use ``` docker stop ivc-server ``` or ``` docker restart ivc-server ```
 
 ``` Note: The install script does all of this of you if you are using it ```
+
+## Available Configuration
+IVC server can be customized by editing '/etc/ivc/ivc-server.conf'.
+### IVC Password
+IVC server can be password protected. This is achieved by uncommenting "PASSWD" variable and putting in the password you wish to use in clear text.
+
+### Listen Addres
+IVC server will default to bind to all IP addresses on the server, in some cases, for example, when Teamspeak on a default port is to co-exist on the server.
+To bind IVC to a specific IP, please uncomment "LISTED_ADDR" and type in the required IP.
+
+### Port settings
+IVC port can be changed, this is useful in case you would want to run Teamspeak on a default port and don't have an additional IP address.
+To change the port you would need to edit two variables. 'PORT' and 'ENDPORT'. please note that ENDPORT <U>MUST</U> be PORT+2.
+
+## Upgrading IVC version
+When a new BMS update is released, it may include an updated IVC server. To allow you to easly upgrade the IVC version without waiting for a new docker to be released. the binaries are being loaded from an external directory on your server. 
+
+To update the IVC server version all you need to do is re-upload the BMS IVC folder to '/opt/ivc' while replacing the original content there (i.e. the old IVC) and restart the docker (``` service ivc-server restart ``` shoult do the trick if installed using the script)
+
+## Known Limitations
+  * Currently only one IVC server per-server is supported. However, I you want it enough, support for two servers is possible
+  * IVC binaries are NOT included in the Docker file. This is done to allow a quick change of binaries without the need to wait for an updated docker to be pushed. You'll need to copy them to the server manually.
