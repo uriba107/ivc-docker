@@ -43,9 +43,14 @@ function create_folder() {
 }
 
 function install_systemd() {
-  local SYSTEMD_PATH=/usr/lib/systemd/system
+  if [ -d /usr/lib/systemd/system ]; then
+    SYSTEMD_PATH=/usr/lib/systemd/system/
+  else
+    SYSTEMD_PATH=/lib/systemd/system/
+  fi
   echo "Creating service"
   cp ${SCRIPT_PATH}/init/ivc-server.service ${SYSTEMD_PATH}
+  /bin/systemctl daemon-reload
   echo "Enabling IVC server Autostart"
   /bin/systemctl enable ivc-server
 }
