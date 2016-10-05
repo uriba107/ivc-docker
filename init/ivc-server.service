@@ -1,6 +1,8 @@
+
 [Unit]
-Description=BMS IVC Server
+Description=IVC Server BMS
 Requires=docker.service
+Before=docker.service
 
 [Service]
 Type=forking
@@ -8,7 +10,9 @@ RemainAfterExit=yes
 
 EnvironmentFile=/etc/ivc/ivc-server.conf
 
-ExecStart=/usr/bin/docker run -d --name ivc-server --restart on-failure:5 -v /opt/ivc:/opt/ivc -p ${LISTEN_ADDR}:${PORT}-${ENDPORT}:9987-9989/udp 108vfs/ivc ${PASSWD}
+ExecStartPre=-/usr/bin/docker pull 108vfs/ivc 
+ExecStartPre=-/usr/bin/docker create --name ivc-server  --restart on-failure:5 -v /opt/ivc:/opt/ivc -p ${LISTEN_ADDR}:${PORT}-${ENDPORT}:9987-9989/udp 108vfs/ivc ${PASSWD}
+ExecStart=/usr/bin/docker start ivc-server
 
 ExecStop=/usr/bin/docker stop ivc-server
 ExecStopPost=/usr/bin/docker rm -f ivc-server
@@ -18,4 +22,3 @@ ExecReload=/usr/bin/docker restart ivc-server
 [Install]
 WantedBy=multi-user.target
 Alias=ivc.service
-
