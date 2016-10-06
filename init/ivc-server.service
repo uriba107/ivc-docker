@@ -9,7 +9,6 @@ RemainAfterExit=yes
 
 EnvironmentFile=/etc/ivc/ivc-server.conf
 
-ExecStartPre=-/usr/bin/docker pull 108vfs/ivc 
 ExecStartPre=-/usr/bin/docker create --name ivc-server  --restart on-failure:5 -v /opt/ivc:/opt/ivc -p ${LISTEN_ADDR}:${PORT}-${ENDPORT}:9987-9989/udp 108vfs/ivc ${PASSWD}
 ExecStart=/usr/bin/docker start ivc-server
 
