@@ -36,8 +36,9 @@ The container will persist a reboot, so you'll only need to start it (no need to
 
 
 ## Build Docker
- ``` Note: This stage is not mandatory,
- you can just install with the script and pull image from dockerhub ```
+
+ ``` Note: This stage is not mandatory, you can just install with the script and pull image from dockerhub ```
+ 
  1. cd into build folder
  2. Run 'build.sh' script as a docker enabled user (root should work)
 
