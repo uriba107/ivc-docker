@@ -8,11 +8,8 @@ Docker size when compiled is under 200MB and negates the need to install Wine ma
 
 [Project page on dockerhub](https://hub.docker.com/r/108vfs/ivc/)
 
-## Build Docker
- ``` Note: This stage is not mandatory,
- you can just install with the script and pull image from dockerhub ```
- 1. cd into build folder
- 2. Run 'build.sh' script as a docker enabled user (root should work)
+## Pre-Requisits
+  * [Docker engine installed](https://docs.docker.com/engine/installation/linux/).
 
 ## Install IVC Server
 install script and systemd are ubuntu compatible and tested on Ubuntu 16.04 and CentOS7.
@@ -36,6 +33,13 @@ The container will persist a reboot, so you'll only need to start it (no need to
 4. To stop or restart just use ``` docker stop ivc-server ``` or ``` docker restart ivc-server ```
 
 ``` Note: The install script does all of this of you if you are using it ```
+
+
+## Build Docker
+ ``` Note: This stage is not mandatory,
+ you can just install with the script and pull image from dockerhub ```
+ 1. cd into build folder
+ 2. Run 'build.sh' script as a docker enabled user (root should work)
 
 ## Available Configuration
 IVC server can be customized by editing '/etc/ivc/ivc-server.conf'.
