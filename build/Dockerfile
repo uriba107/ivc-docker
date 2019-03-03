@@ -16,28 +16,26 @@ ENV APP_ROOT /opt
 ENV APP_PATH ${APP_ROOT}/${APP_NAME}
 ## upgrade everything just in case
 RUN apk upgrade --no-cache
-## Dumb-init
-RUN apk add --no-cache -t build-deps gcc curl musl-dev \
- && curl -L https://github.com/Yelp/dumb-init/archive/master.tar.gz | tar -C /tmp -xzf - \
- && gcc -std=gnu99 -s -Wall -Werror -O3 -o /usr/bin/dumb-init /tmp/dumb-init-master/dumb-init.c \
- && apk del build-deps
 
 ## install wine
-RUN apk add --no-cache -t ivc-deps freetype libpng wine bash
+RUN apk add --no-cache -t ivc-deps dumb-init bash ncurses freetype libpng gnutls-c++ wine
 
 EXPOSE 9987 9988 9989
 
 #Move bineries over
 WORKDIR /opt
 ADD wrapper/launcher.sh /opt
+#ADD IVC /opt/ivc 
 
-## create user
-#RUN adduser -S ${APP_NAME}
-#RUN chown ${APP_NAME} -R ${APP_ROOT}
+## Install xvfb
+#RUN apk add --no-cache -t wine-deps xvfb
 
 # configure wine
 #USER ${APP_NAME}
-RUN /usr/bin/wineboot --init
+#RUN /usr/bin/wineboot --init
+
+#ADD bin/xvfb-run /usr/bin
+#RUN xvfb-run /usr/bin/wineboot 
 
 VOLUME ["/opt/ivc"]
 ENTRYPOINT ["/usr/bin/dumb-init", "--" ]
